@@ -1,6 +1,13 @@
 [package]
 name = "pca9548a"
 version = "0.1.0"
+description = "PCA9548a I2C-Expander driver using embedded-hal"
+authors = ["Michael Heinrichs <michael.spamacc@gmail.com>"]
+categories = ["embedded", "hardware-support", "no-std"]
+keywords = ["hal", "IO"]
+license = "MIT"
+readme = "README.md"
+repository = "https://github.com/Phosfor/pca9548a"
 edition = "2021"
 
 [features]
