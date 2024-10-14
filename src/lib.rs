@@ -328,3 +328,52 @@ where
 
     // TODO: Read/Write/WriteRead
 }
+
+#[cfg(feature = "hal_0_2")]
+impl<'a, Mutex> embedded_hal_0_2::blocking::i2c::Write for SubBus<'a, Mutex>
+where
+    Mutex: SyncMutex,
+    Mutex::Error: core::fmt::Debug,
+    Mutex::Bus: embedded_hal::i2c::I2c, //TODO: This is ugly and should be replaced by embedded_hal_0_2 stuff
+{
+    type Error = <Self as ErrorType>::Error;
+
+    fn write(&mut self, address: u8, bytes: &[u8]) -> Result<(), Self::Error> {
+        self.select()?.write(address, bytes).map_err(Error::Bus)
+    }
+}
+
+#[cfg(feature = "hal_0_2")]
+impl<'a, Mutex> embedded_hal_0_2::blocking::i2c::Read for SubBus<'a, Mutex>
+where
+    Mutex: SyncMutex,
+    Mutex::Error: core::fmt::Debug,
+    Mutex::Bus: embedded_hal::i2c::I2c, //TODO: This is ugly and should be replaced by embedded_hal_0_2 stuff
+{
+    type Error = <Self as ErrorType>::Error;
+
+    fn read(&mut self, address: u8, buffer: &mut [u8]) -> Result<(), Self::Error> {
+        self.select()?.read(address, buffer).map_err(Error::Bus)
+    }
+}
+
+#[cfg(feature = "hal_0_2")]
+impl<'a, Mutex> embedded_hal_0_2::blocking::i2c::WriteRead for SubBus<'a, Mutex>
+where
+    Mutex: SyncMutex,
+    Mutex::Error: core::fmt::Debug,
+    Mutex::Bus: embedded_hal::i2c::I2c, //TODO: This is ugly and should be replaced by embedded_hal_0_2 stuff
+{
+    type Error = <Self as ErrorType>::Error;
+
+    fn write_read(
+        &mut self,
+        address: u8,
+        bytes: &[u8],
+        buffer: &mut [u8],
+    ) -> Result<(), Self::Error> {
+        self.select()?
+            .write_read(address, bytes, buffer)
+            .map_err(Error::Bus)
+    }
+}
