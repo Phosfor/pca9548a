@@ -249,7 +249,7 @@ where
 /// This implements the [`embedded_hal::i2c::I2c`]/[`embedded_hal_async::i2c::I2c`] traits, so you can use it with e.g. device drivers.
 ///
 /// Example:
-/// ```
+/// ```no_run
 /// use pca9548a::{Pca9548a, BASE_ADDRESS};
 /// use embedded_hal::i2c::I2c;
 ///

@@ -10,6 +10,9 @@ readme = "README.md"
 repository = "https://github.com/Phosfor/pca9548a"
 edition = "2021"
 
+[lib]
+doctest = false
+
 [features]
 std = []
 embassy = ["embassy-sync"]
@@ -18,3 +21,10 @@ embassy = ["embassy-sync"]
 embedded-hal = "1.0.0"
 embedded-hal-async = "1.0.0"
 embassy-sync = { optional = true, version = "0.6" }
+
+[dev-dependencies]
+embedded-hal-mock = { version = "0.11.1", features = ["embedded-hal-async"] }
+embassy-sync = { version = "0.6.0", features = ["log"] }
+critical-section = { version = "1.1.3", features = ["std"] }
+tokio = { version = "1.40.0", features = ["rt", "macros"] }
+log = "0.4.22"
