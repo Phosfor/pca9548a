@@ -12,7 +12,9 @@ edition = "2021"
 
 [features]
 std = []
+embassy = ["embassy-sync"]
 
 [dependencies]
 embedded-hal = "1.0.0"
 embedded-hal-async = "1.0.0"
+embassy-sync = { optional = true, version = "0.6" }

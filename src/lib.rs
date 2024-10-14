@@ -57,6 +57,30 @@ impl<T> SyncMutex for std::sync::Mutex<T> {
     }
 }
 
+// TODO: Untested
+#[cfg(feature = "embassy")]
+impl<Raw, T> MutexBase for embassy_sync::mutex::Mutex<Raw, T>
+where
+    Raw: embassy_sync::blocking_mutex::raw::RawMutex,
+{
+    type Bus = T;
+    type Error = core::convert::Infallible;
+
+    fn new(v: Self::Bus) -> Self {
+        Self::new(v)
+    }
+}
+
+#[cfg(feature = "embassy")]
+impl<Raw, T> AsyncMutex for embassy_sync::mutex::Mutex<Raw, T>
+where
+    Raw: embassy_sync::blocking_mutex::raw::RawMutex,
+{
+    fn lock(&self) -> impl Future<Output = Result<impl DerefMut<Target = Self::Bus>, Self::Error>> {
+        async { Ok(self.lock().await) }
+    }
+}
+
 /// The error type returned by most operations.
 ///
 /// The error can either come from the mutex, or from the bus.
