@@ -16,11 +16,13 @@ doctest = false
 [features]
 std = []
 embassy = ["embassy-sync"]
+async-to-sync = ["embassy-futures"]
 
 [dependencies]
 embedded-hal = "1.0.0"
 embedded-hal-async = "1.0.0"
 embassy-sync = { optional = true, version = "0.6" }
+embassy-futures = { optional = true, version = "0.1" }
 
 [dev-dependencies]
 embedded-hal-mock = { version = "0.11.1", features = ["embedded-hal-async"] }

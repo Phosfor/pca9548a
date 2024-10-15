@@ -81,6 +81,16 @@ where
     }
 }
 
+#[cfg(feature = "async-to-sync")]
+impl<T> SyncMutex for T
+where
+    T: AsyncMutex,
+{
+    fn lock(&self) -> Result<impl DerefMut<Target = Self::Bus>, Self::Error> {
+        embassy_futures::block_on(AsyncMutex::lock(self))
+    }
+}
+
 /// The error type returned by most operations.
 ///
 /// The error can either come from the mutex, or from the bus.
